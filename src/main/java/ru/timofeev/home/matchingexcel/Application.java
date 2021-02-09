@@ -16,7 +16,7 @@ public class Application {
 
     private static void validateArgs(String[] args) {
         if (args.length != 4) {
-            throw new IllegalArgumentException("args must be contain 2 values");
+            throw new IllegalArgumentException("args must be contain 4 values");
         }
     }
 }
