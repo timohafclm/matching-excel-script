@@ -15,11 +15,13 @@ public class DescriptionHelper {
     public static String subStringDescription(Row row, Map<NeedColumn, Integer> columnToIndex) {
         var description = row.getCell(columnToIndex.get(DESCRIPTION)).getStringCellValue().trim();
         var quantity = extractQuantity(row, columnToIndex);
+        String result;
         if (description.endsWith(" 0")) {
-            return substringWithZero(description);
+            result = substringWithZero(description);
         } else {
-            return subStringWithQuantity(description, quantity);
+            result = subStringWithQuantity(description, quantity);
         }
+        return result.replaceAll(" ", "");
     }
 
     private static Optional<String> extractQuantity(Row row, Map<NeedColumn, Integer> columnToIndex) {
