@@ -11,7 +11,12 @@ public class Application {
         var handledFile = args[2];
         var handledSheet = args[3];
         var matchingOperation = new MatchingOperation(sourceFile, sourceSheet, handledFile, handledSheet);
-        matchingOperation.activate();
+        try {
+            matchingOperation.activate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     private static void validateArgs(String[] args) {

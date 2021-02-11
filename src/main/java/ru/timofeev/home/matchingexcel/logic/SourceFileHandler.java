@@ -26,14 +26,11 @@ public class SourceFileHandler {
     public Map<String, SourceCells> activate() throws Exception {
         try (var fis = new FileInputStream(sourceFileName);
              var workbook = new XSSFWorkbook(fis)) {
-            return handleSourceFile(workbook);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
+            return handleWorkbook(workbook);
         }
     }
 
-    private Map<String, SourceCells> handleSourceFile(Workbook workbook) {
+    private Map<String, SourceCells> handleWorkbook(Workbook workbook) {
         var sheet = workbook.getSheet(sourceSheet);
         return handle(sheet);
     }
@@ -41,15 +38,13 @@ public class SourceFileHandler {
     private Map<String, SourceCells> handle(Sheet sheet) {
         Map<NeedColumn, Integer> columnToIndex = new HashMap<>();
         Map<String, SourceCells> resultMap = new HashMap<>();
-        int count = 0;
         for (var row : sheet) {
-            if (count == 0) {
+            if (row.getRowNum() == 0) {
                 columnToIndex = fillColumnIndex(row);
             } else {
                 var entry = handleRow(row, columnToIndex);
                 resultMap.put(entry.getKey(), entry.getValue());
             }
-            count++;
         }
         return resultMap;
     }
